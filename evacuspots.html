@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <title>New Orleans EvacuSpots</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+      body { 
+        margin: 0; 
+        padding: 0;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+      }
+      #map { 
+        position: absolute; 
+        top: 0; 
+        bottom: 0; 
+        width: 100%; 
+      }
+      h1 {
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    h2 {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #2dc4b2;
+}
+
+#console {
+  position: absolute;
+  width: 270px;
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: white;
+}
+
+.session {
+  margin-bottom: 20px;
+}
+
+.row {
+  height: 12px;
+  width: 100%;
+}
+
+.colors {
+  background: linear-gradient(to right, #2dc4b2, #3bb3c3, #669ec4, #8b88b6, #a2719b, #aa5e79);
+  margin-bottom: 5px;
+}
+
+.label {
+  width: 15%;
+  display: inline-block;
+  text-align: center;
+}
+
+    </style>
+  </head>
+  <style>
+    .mapboxgl-popup {
+      max-width: 400px;
+      font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+  </style>
+  <body>
+    <div id='map'>
+    </div>
+    <div id='console'>
+        <h1>New Orleans EvacuSpots</h1>
+        <p>Data: <br><a href='https://ready.nola.gov/plan/hurricane/'> NOLA Ready Evacuspot Locator</a><br><a href='https://github.com/Evacuteer/evacuspots/blob/master/evacuspots.geojson'>Evacuspot GeoJSON</a>
+            <br><br><img src="green_bus.svg" width="20" height="20"> General Public EvacuSpots
+            <br><br><img src="purple_bus.svg" width="20" height="20"> Seniors EvacuSpots</p>
+
+  </div>
+    <script>
+      // The value for 'accessToken' begins with 'pk...'
+      mapboxgl.accessToken = 'pk.eyJ1IjoibWF5YWJlYWsiLCJhIjoiY2xld2QwaW15MDhtbjN0cXFjOGw2MGdwMiJ9.4gvCm_szNKWaWqdjdN7I8w';
+      const map = new mapboxgl.Map({
+        container: 'map',
+        // Replace YOUR_STYLE_URL with your style URL.
+        style: 'mapbox://styles/mayabeak/clga0ad26001s01pgsxt7k5iu', 
+        center: [-90.05, 29.98],
+        zoom: 11.4
+      });
+
+      /* 
+        Add event listeners that run
+        when a user hovers over or leaves a marker.
+      */
+      let popup = new mapboxgl.Popup({ offset: [0, -15] });
+
+      map.on('mouseenter', 'evacuspots', (event) => {
+        // Change the cursor style as a visual cue.
+        map.getCanvas().style.cursor = 'pointer';
+
+        // Get the marker information.
+        const feature = event.features[0];
+
+        /* 
+          Set the popup's coordinates and HTML,
+          and add it to the map.
+        */
+        popup.setLngLat(feature.geometry.coordinates)
+          .setHTML(
+            `<h3>${feature.properties.name}</h3>
+            <p><b>Address:</b> ${feature.properties.address}</p>
+            <p><b>Neighborhood:</b> ${feature.properties.neighborhood}</p>
+            <p><b>Access:</b> ${feature.properties.access_restrictions}</p>`
+          )
+          .addTo(map);
+      });
+
+      map.on('mouseleave', 'evacuspots', () => {
+        // Change the cursor style back to default.
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+      });
+    </script>
+  </body>
+</html>
