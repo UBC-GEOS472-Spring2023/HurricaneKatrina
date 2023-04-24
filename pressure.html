@@ -117,7 +117,8 @@
         zoom: 4.35,
       });
 
-      var lineCoords = [ [-75.1, 23.1],
+     // Define an array the latitude and longitude coordinates of the hurricane
+     var lineCoords = [ [-75.1, 23.1],
     [-75.7, 23.4],
     [-76.2, 23.8],
     [-76.5, 24.5],
@@ -152,16 +153,20 @@
     [-85.3, 38.6],
     [-82.9, 40.1]
 ];
+// Creates an empty array to store the coordinates
 var coordinates = [];
 
+// Loop through the lineCoords array and push each coordinate to the coordinates array
 for (var i = 0; i < lineCoords.length; i++) {
     coordinates.push([lineCoords[i][0], lineCoords[i][1]]);
 }
+// Create a Geojson LineString object using the coordinates array
 var lineString = {
     "type": "LineString",
     "coordinates": coordinates
 };
 
+// Create a GeoJSON FeatureCollection object with the LineString feature
 var geojson = {
     "type": "FeatureCollection",
     "features": [{
@@ -169,7 +174,7 @@ var geojson = {
         "geometry": lineString
     }]
 };
-
+//load dotted line
 map.on('load', function() {
     map.addSource('line', {
         type: 'geojson',
@@ -185,7 +190,7 @@ map.on('load', function() {
             'line-cap': 'round'
         },
         paint: {
-            'line-color': '#111111',
+            'line-color': '#111111', //appearance of the dotted line
             'line-opacity': 1,
             'line-width': 5,
             'line-dasharray': [2,2]
@@ -194,7 +199,7 @@ map.on('load', function() {
     
     animateLine();
 });
-
+//animation for the dotted line which loops and resets to the first coordinate when it reaches to the last coordinate
 function animateLine() {
     var counter = 0;
     setInterval(function() {
@@ -210,6 +215,7 @@ function animateLine() {
         }
     }, 100);
 }
+      //loading data from hurricanepath.geojson
       map.on("load", function () {
         map.addSource("katrina", {
           type: "geojson",
@@ -224,7 +230,7 @@ function animateLine() {
     "circle-radius": [
       "interpolate",
       ["linear"],
-      ["get", "Pres_WMO_"],
+      ["get", "Pres_WMO_"], //proportional circles
               900, 42,
               920, 35,
               944, 28,
@@ -234,7 +240,7 @@ function animateLine() {
             ],"circle-color": [
       "interpolate",
       ["linear"],
-      ["get", "Pres_WMO_"],
+      ["get", "Pres_WMO_"], //assigned colour of proportional symbols to represent severity of hurricane
               900, "#660000",
               920, "#cc0022",
               944, "#ff99b3",
@@ -249,6 +255,7 @@ function animateLine() {
   },
 });
 
+//presenting data value from geojson into textbox
 var presDisplay = document.getElementById('pres');
 var latDisplay = document.getElementById('lat');
 var longDisplay = document.getElementById('long');
@@ -257,23 +264,22 @@ var timeDisplay = document.getElementById('time');
 map.on('mousemove', 'katrina', (e) => {
 
   map.getCanvas().style.cursor = 'pointer';
-  // Set variables equal to the current feature's wind speed
+  // making variables are equal to the feature's pressure
   var pressure = e.features[0].properties.Pres_WMO_;
   var preslat = e.features[0].properties.Latitude;
   var preslong = e.features[0].properties.Longitude;
   var prestime = e.features[0].properties.ISO_time;
 
-  // Check whether features exist
+  // Checks if the features exist
   if (e.features.length > 0) {
-    // Display the wind speed in the sidebar
+    // Display the pressure information in textbox
     presDisplay.textContent = pressure;
     latDisplay.textContent = preslat;
     longDisplay.textContent = preslong;
     timeDisplay.textContent = prestime;
     
 
-    // If quakeID for the hovered feature is not null,
-    // use removeFeatureState to reset to the default behavior
+    // If presID for the hovered feature is not null, use removeFeatureState to reset to the default behavior
     if (presID) {
       map.removeFeatureState({
         source: "katrina",
@@ -283,8 +289,7 @@ map.on('mousemove', 'katrina', (e) => {
 
     presID = e.features[0].OBJECTID;
 
-    // When the mouse moves over the katrina layer, update the
-    // feature state for the feature under the mouse
+    // When the mouse moves over the hurricane katrina layer, update the data to show what's under the mouse
     map.setFeatureState({
       source: 'katrina',
       id: presID,
