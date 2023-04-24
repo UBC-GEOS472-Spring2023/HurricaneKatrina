@@ -81,11 +81,11 @@
       <div class="legend-item"><span class="legend-color" style= 'background-color:#e31a1c;'></span><span class="legend-label">10000+ people</span></div>
     </div>
 
-    <div id="button-container">
-      <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina//Total_Population'">Total Population</button>
-      <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina/'">Black and African American</button>
-      <button onclick="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/">65 Years and over</button>
-      <button onclick="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/">Income below poverty level</button>
+      <div id="button-container">
+      <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/Total_Population'">Total Population</button>
+      <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/Black_African_American'">Black and African American</button>
+      <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/65_Years_over'">65 Years and over</button>
+      <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/Income_below_poverty'">Income below poverty level</button>
     </div>
 
     <script>
@@ -95,7 +95,7 @@
         container: 'map',
         style: 'mapbox://styles/kdante/clgu6kcwj001o01po5kbjh9hn',
         center: [-91, 31],
-        zoom: 7
+        zoom: 6.5
       });
     </script>
   </body>
