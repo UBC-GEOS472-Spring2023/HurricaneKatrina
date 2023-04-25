@@ -13,10 +13,11 @@ Example screenshot:
 * Louisiana Demographic Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/DemographicMap_Final/index.html
 * Evacuation Route Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/evacuation_routes.html
 
-Example Screenshot (can also be found in the folder): <p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/evac_routes.png" width="500" title="Evacuation Routes screenshot"> </p>
+<p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/evac_routes.png" width="500" title="Evacuation Routes screenshot"> </p>
 
 * Shelter spots Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/shelterspots.html
-Example Screenshot (can also be found in the folder): <p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/shelterspots.png" width="500" title="Shelter spots screenshot"> </p>
+
+<p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/shelterspots.png" width="500" title="Shelter spots screenshot"> </p>
 
 
 To include:
