@@ -4,7 +4,11 @@ This is the README file our final project for GEOS 472: **Hurricane Katrina: An 
 
 **Here is the link to our UBC Blogs page :** https://blogs.ubc.ca/hurricanekatrina/
 
-URL links to
+URL links to individual HTML files:
+* Pressure map: 
+* 
+
+
 
 To include:
 * A URL link to the group essay.
