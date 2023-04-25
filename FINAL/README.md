@@ -14,7 +14,6 @@ Example screenshot: <p> <img src="https://ubc-geos472-spring2023.github.io/Hurri
 <p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Katrinawindspeed.png" width="500" title="Hurricane Katrina Wind Speed"> </p>
 
 * Louisiana Demographic Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/DemographicMap_Final/index.html
-<p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/DemographicMap_Final.png" width="500" title="Louisiana Demographic Map"> </p>
 
 * Evacuation Route Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/evacuation_routes.html
 
