@@ -74,11 +74,11 @@
     
     <div class="legend">
       <h4>Louisiana: 65 Years Old and Over (Total Population)</h4>
-      <div class="legend-item"><span class="legend-color" style= 'background-color:#fed976;'></span><span class="legend-label">0-300 people</span></div>
-      <div class="legend-item"><span class="legend-color" style= 'background-color:#feb24c;'></span><span class="legend-label">300+ people</span></div>
-      <div class="legend-item"><span class="legend-color" style= 'background-color:#fd8d3c;'></span><span class="legend-label">600+ people</span></div>
+      <div class="legend-item"><span class="legend-color" style= 'background-color:#edf8e9;'></span><span class="legend-label">0-300 people</span></div>
+      <div class="legend-item"><span class="legend-color" style= 'background-color:#bae4b3;'></span><span class="legend-label">300+ people</span></div>
+      <div class="legend-item"><span class="legend-color" style= 'background-color:#74c476;'></span><span class="legend-label">600+ people</span></div>
       <div class="legend-item"><span class="legend-color" style= 'background-color:#fc4e2a;'></span><span class="legend-label">800+ people</span></div>
-      <div class="legend-item"><span class="legend-color" style= 'background-color:#e31a1c;'></span><span class="legend-label">1100+ people</span></div>
+      <div class="legend-item"><span class="legend-color" style= 'background-color:#31a354;'></span><span class="legend-label">1100+ people</span></div>
     </div>
     
      <div id="button-container">
@@ -94,8 +94,8 @@
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/kdante/clgugh2gx002601pw9d2fbkla',
-        center: [-91, 31],
-        zoom: 6.5
+        center: [-90.0715, 29.9511],
+        zoom: 8.5
       });
     </script>
   </body>
