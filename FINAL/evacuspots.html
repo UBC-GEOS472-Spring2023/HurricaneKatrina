@@ -76,8 +76,6 @@ a {
     <div id='console'>
         <h1>New Orleans EvacuSpots</h1>
         <p>Data: <br><a href='https://ready.nola.gov/plan/hurricane/'> NOLA Ready Evacuspot Locator</a><br><a href='https://github.com/Evacuteer/evacuspots/blob/master/evacuspots.geojson'>Evacuspot GeoJSON</a>
-            <br><br><img src="green_bus.svg" width="20" height="20"> General Public EvacuSpots
-            <br><br><img src="purple_bus.svg" width="20" height="20"> Seniors EvacuSpots</p>
 
   </div>
     <script>
@@ -86,8 +84,8 @@ a {
       const map = new mapboxgl.Map({
         container: 'map',
         // Replace YOUR_STYLE_URL with your style URL.
-        style: 'mapbox://styles/mayabeak/clga0ad26001s01pgsxt7k5iu', 
-        center: [-90.05, 29.98],
+        style: 'mapbox://styles/mayabeak/clga0ad26001s01pgsxt7k5iu',  // this is the mapbox light style with icons loaded on it for each of the evacuspot files
+        center: [-90.05, 29.98],  // center on New Orleans
         zoom: 11.4
       });
 
@@ -95,9 +93,9 @@ a {
         Add event listeners that run
         when a user hovers over or leaves a marker.
       */
-      let popup = new mapboxgl.Popup({ offset: [0, -15] });
+      let popup = new mapboxgl.Popup({ offset: [0, -15] });  // pop-ups
 
-      map.on('mouseenter', 'evacuspots', (event) => {
+      map.on('mouseenter', 'evacuspots', (event) => {  // show pop-ups when you mouse over
         // Change the cursor style as a visual cue.
         map.getCanvas().style.cursor = 'pointer';
 
@@ -108,8 +106,8 @@ a {
           Set the popup's coordinates and HTML,
           and add it to the map.
         */
-        popup.setLngLat(feature.geometry.coordinates)
-          .setHTML(
+        popup.setLngLat(feature.geometry.coordinates) 
+          .setHTML(                                  // show address, neighbourhood, and access fields on the pop-ups
             `<h3>${feature.properties.name}</h3>
             <p><b>Address:</b> ${feature.properties.address}</p>
             <p><b>Neighborhood:</b> ${feature.properties.neighborhood}</p>
@@ -118,7 +116,7 @@ a {
           .addTo(map);
       });
 
-      map.on('mouseleave', 'evacuspots', () => {
+      map.on('mouseleave', 'evacuspots', () => {     // pop-up leaves when mouse leaves
         // Change the cursor style back to default.
         map.getCanvas().style.cursor = '';
         popup.remove();
