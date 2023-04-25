@@ -7,9 +7,12 @@ This is the README file our final project for GEOS 472: **Hurricane Katrina: An 
 URL links to individual HTML files:
 * Pressure map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/pressure.html
 Example screenshot:
+<p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Katrinapressure.png" width="500" title="Hurricane Katrina Pressure"> </p>
 
 
 * Wind Speed map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/wind.html
+<p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Katrinawindspeed.png" width="500" title="Hurricane Katrina Wind Speed"> </p>
+
 * Louisiana Demographic Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/DemographicMap_Final/index.html
 * Evacuation Route Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/evacuation_routes.html
 
