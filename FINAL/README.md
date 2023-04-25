@@ -15,11 +15,11 @@ Example screenshot: <p> <img src="https://ubc-geos472-spring2023.github.io/Hurri
 
 * Louisiana Demographic Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/DemographicMap_Final/index.html
 
-* Evacuation Route Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/evacuation_routes.html
+* Evacuation Route Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/evacuation_routes.html
 
 <p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/evac_routes.png" width="500" title="Evacuation Routes screenshot"> </p>
 
-* Shelter spots Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/shelterspots.html
+* Shelter spots Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/shelterspots.html
 
 <p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/shelterspots.png" width="500" title="Shelter spots screenshot"> </p>
 
