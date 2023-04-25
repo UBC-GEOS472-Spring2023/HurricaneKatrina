@@ -106,9 +106,9 @@ a {
     <div class="map-overlay" id="legend"></div>
     <div id='console'>
         <h1>New Orleans Shelters</h1>
-        <p>Hover over the points to see 2005 shelters and proposed shelters (zoom to see buildings)</p> 
+        <p>Click a point to see the 2005 last resort shelters and the proposed shelters (zoom to see buildings)</p> 
   </div>
-  <div id="state-legend" class="legend">
+  <div id="shelter-legend" class="legend">
     <h4>Shelter Classes</h4>
     <div><span style="background-color: #880808"></span>Shelters as a last resort</div>
     <div><span style="background-color: #4264fb"></span>Proposed Shelters</div>
@@ -127,7 +127,7 @@ a {
         center: [-90.08127, 29.95144],
         pitch: 60, // pitch in degrees
         //bearing: -60, // bearing in degrees
-        zoom: 15.3
+        zoom: 16
       });
 
       map.on('load', () => {
@@ -190,7 +190,22 @@ a {
                     ],
                     "type": "Point"
                 }
-                }
+                },
+                  {
+                    "type": "Feature",
+                    "properties": {
+                      "description": "<strong>The Cloverleaf</strong>",
+                      "image": "https://media.npr.org/assets/img/2010/08/24/21_38_2005_eway_1_slide-827b815895a91e5e9f396a08e2781e9ef58859a2-s1300-c85.webp",
+                      "explanation": "<p>The “Cloverleaf” was a high-ground spot on the interstate and was one of the worst locations. The site was being used for medical triage and evacuation, so there was initially some food and water there, at least for the medical patients. However, additional people arrived on their own or by the helicopters or boats that rescued them from the water. The supply of food and water was not sufficient for the crowd, which eventually grew to 6,000-7,000 people.</p>"
+                    },
+                    "geometry": {
+                      "coordinates": [
+                        -90.15548541451469,
+                        29.99752774359675
+                      ],
+                      "type": "Point"
+                    }
+                    }
             ]
             }
             });
