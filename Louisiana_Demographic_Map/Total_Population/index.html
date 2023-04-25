@@ -94,8 +94,8 @@
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/kdante/clgu6kcwj001o01po5kbjh9hn',
-        center: [-91, 31],
-        zoom: 6.5
+        center: [-90, 29.9],
+        zoom: 8.5
       });
     </script>
   </body>
