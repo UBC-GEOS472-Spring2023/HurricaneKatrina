@@ -2,7 +2,9 @@
 
 This is the README file our final project for GEOS 472: **Hurricane Katrina: An Evaluation of the disaster and evacuation responses**
 
-**Here is the link to our ArcGIS StoryMap :** (insert it here)
+**Here is the link to our UBC Blogs page :** https://blogs.ubc.ca/hurricanekatrina/
+
+URL links to
 
 To include:
 * A URL link to the group essay.
