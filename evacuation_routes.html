@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8' />
+    <title>Hurricane Katrina</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+h1 {
+  font-size: 20px;
+  line-height: 30px;
+}
+
+h2 {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #2dc4b2;
+}
+
+#console {
+  position: absolute;
+  width: 240px;
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: white;
+}
+
+.session {
+  margin-bottom: 20px;
+}
+
+.row {
+  height: 12px;
+  width: 100%;
+}
+
+.colors {
+  background: linear-gradient(to right, #2dc4b2, #3bb3c3, #669ec4, #8b88b6, #a2719b, #aa5e79);
+  margin-bottom: 5px;
+}
+
+.label {
+  width: 15%;
+  display: inline-block;
+  text-align: center;
+}
+
+.legend {
+        background-color: #fff;
+        border-radius: 3px;
+        top: 300px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        padding: 10px;
+        position: absolute;
+        left: 10px;
+        z-index: 1;
+        }
+        
+      .legend h4 {
+        margin: 0 0 10px;
+      }
+      
+      .legend div span {
+        border-radius: 50%;
+        display: inline-block;
+        height: 10px;
+        margin-right: 5px;
+        width: 10px;
+      }
+
+#menu {
+    background: #fff;
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    border-radius: 3px;
+    width: 120px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    font-family: 'Open Sans', sans-serif;
+    }
+    
+    #menu a {
+    font-size: 13px;
+    color: #404040;
+    display: block;
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    text-align: center;
+    }
+    
+    #menu a:last-child {
+    border: none;
+    }
+    
+    #menu a:hover {
+    background-color: #f8f8f8;
+    color: #404040;
+    }
+    
+    #menu a.active {
+    background-color: #3887be;
+    color: #ffffff;
+    }
+    
+    #menu a.active:hover {
+    background: #3074a4;
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+
+  <nav id="menu"></nav>
+
+    <div id='map'></div>
+    <div class="map-overlay" id="legend"></div>
+    <div id='console'>
+      <h1>Hurricane Katrina Evacuation Routes</h1>
+      <p>Data: <a href='https://ascelibrary.org/doi/pdf/10.1061%2F(ASCE)NH.1527-6996.0000026'>LA DOTD Evacuation Routes</a> 2005</p>
+      <h5><span style="font-weight:normal">Contraflow is when vehicles travel in the opposite direction of a lane's normal traffic flow (occurs during an event like a hurricane evacuation, when all traffic lanes move toward inland safety and away from the Gulf Coast).</span></h5>
+      </div>
+      <div id="route-legend" class="legend">
+        <h4>Routes</h4>
+        <div><span style="background-color: #B221C9"></span>I-10 West to I-59 North</div>
+        <div><span style="background-color: #21C930"></span>I-10 East to I-59 North (Contraflow)</div>
+        <div><span style="background-color: blue"></span>I-10 West (contraflow) to I-10 West</div>
+        <div><span style="background-color: #A7631D"></span>I-10 West to I-55 North to I-55 North (contraflow)</div>
+        <div><span style="background-color: #F88D1B"></span>I-12 to US 190 West</div>
+        <div><span style="background-color: #F3392A"></span>Causeway to I-12 West to I-55 North</div> 
+      </div>
+
+
+<script> 
+
+//my access token
+mapboxgl.accessToken = 'pk.eyJ1IjoiaXNhYmVsbGFtb250ZWNhbHZvIiwiYSI6ImNsZXRqeW51dzAwbzQzcXRmdnR3cnE3a3EifQ.rJ7u9o56bPAut1NXzv0lCg';
+
+//creating new mapbox map
+const map = new mapboxgl.Map({
+  container: 'map', // container element id
+  style: 'mapbox://styles/isabellamontecalvo/clg2ljq47000l01rtpujgf7r3',
+  center: [-90.101603, 29.970262], // initial map center in [lon, lat]
+  zoom: 10
+});
+
+//creating variable with coordinates for I-10 West to I-55 North to I-55 North (contraflow)
+const geojsoni55 = {
+  'type': 'FeatureCollection',
+  'features': [
+  {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "coordinates": [
+          [
+            -90.23325124685915,
+            30.004063375994775
+          ],
+          [
+            -90.29096209407616,
+            30.009417911492974
+          ],
+          [
+            -90.3878338733333,
+            30.064731183262694
+          ],
+          [
+            -90.4373003138049,
+            30.086134480261336
+          ],
+          [
+            -90.44554472055032,
+            30.175265012537636
+          ],
+          [
+            -90.39944876426837,
+            30.2750478614481
+          ],
+          [
+            -90.39853612616723,
+            30.31366049938049
+          ],
+          [
+            -90.41678888819234,
+            30.371944632522784
+          ],
+          [
+            -90.47976091718023,
+            30.475038127279987
+          ],
+          [
+            -90.50075159350915,
+            30.539514456704012
+          ],
+          [
+            -90.50129426926104,
+            30.60476566326645
+          ],
+          [
+            -90.53314013069765,
+            30.657958154062342
+          ],
+          [
+            -90.52732029687489,
+            30.86181439097824
+          ],
+          [
+            -90.52123565242402,
+            30.944894761790607
+          ],
+          [
+            -90.50194655416038,
+            31.00052497886378
+          ]
+        ],
+        "type": "LineString"
+      }
+    }
+  ]
+}
+
+//creating variable with coordinates for Causeway to I-12 West to I-55 North
+const geojsoni12 = {
+  'type': 'FeatureCollection',
+  'features': [
+  {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "coordinates": [
+          [
+            -90.14807235280618,
+            30.000619942071594
+          ],
+          [
+            -90.15103250307747,
+            30.03308625304389
+          ],
+          [
+            -90.08097561332339,
+            30.422701572520637
+          ],
+          [
+            -90.23082539933394,
+            30.47978134782069
+          ],
+          [
+            -90.47393859809311,
+            30.4748320027187
+          ],
+          [
+            -90.48925281533761,
+            30.50452429851734
+          ]
+        ],
+        "type": "LineString"
+      }
+    }
+  ]
+}
+
+//creating variable with coordinates for I-10 West to I-55 North route
+const geojsoni10 = {
+  'type': 'FeatureCollection',
+  'features': [
+{
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "coordinates": [
+          [
+            -90.18812051270027,
+            30.00032668468323
+          ],
+          [
+            -90.2925522418775,
+            30.008828505763773
+          ],
+          [
+            -90.37412947617456,
+            30.05835145286079
+          ],
+          [
+            -90.43985215608309,
+            30.091403777757662
+          ],
+          [
+            -90.59218105986623,
+            30.122019011644085
+          ],
+          [
+            -90.69125673009859,
+            30.12239047625411
+          ],
+          [
+            -90.78234721153534,
+            30.149600064906878
+          ],
+          [
+            -90.83448853157869,
+            30.163038687516803
+          ],
+          [
+            -90.8725424411283,
+            30.172670411105656
+          ],
+          [
+            -90.94851456293426,
+            30.213052967911835
+          ],
+          [
+            -91.01897890819173,
+            30.337181087409732
+          ],
+          [
+            -91.09173042319308,
+            30.396423235091078
+          ],
+          [
+            -91.11478732320737,
+            30.420924549352762
+          ],
+          [
+            -91.2087195162067,
+            30.447363575664596
+          ],
+          [
+            -91.29150159614032,
+            30.45221357301449
+          ],
+          [
+            -91.32927594329463,
+            30.453599242213045
+          ]
+        ],
+        "type": "LineString"
+      }
+    }
+  ]
+}
+
+//creating variable with coordinates for  I-12 to US 190 West
+const geojsonus190w = {
+  'type': 'FeatureCollection',
+  'features': [
+  {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "coordinates": [
+          [
+            -89.77110439639341,
+            30.310729472295534
+          ],
+          [
+            -89.81927083181245,
+            30.310729472295534
+          ],
+          [
+            -89.89821026763887,
+            30.339601699799474
+          ],
+          [
+            -89.96778400768952,
+            30.376545728430273
+          ],
+          [
+            -90.04003366081871,
+            30.414629639265925
+          ],
+          [
+            -90.05341322621314,
+            30.422706135294916
+          ],
+          [
+            -90.08151031354126,
+            30.431935597905735
+          ],
+          [
+            -90.08284827008056,
+            30.464231838877737
+          ],
+          [
+            -90.09227261253801,
+            30.484185884660334
+          ],
+          [
+            -90.09602902578706,
+            30.494301487933726
+          ],
+          [
+            -90.10495050725285,
+            30.4983474347968
+          ],
+          [
+            -90.11199378209486,
+            30.4983474347968
+          ],
+          [
+            -90.11856750528028,
+            30.494301487933726
+          ],
+          [
+            -90.1382886748371,
+            30.49187383904986
+          ],
+          [
+            -90.16317491261115,
+            30.493492278369402
+          ],
+          [
+            -90.18571339210487,
+            30.494706090192338
+          ],
+          [
+            -90.20496501000514,
+            30.503606914145124
+          ],
+          [
+            -90.3538974795274,
+            30.504851316402224
+          ],
+          [
+            -90.37267954577206,
+            30.508087736301064
+          ],
+          [
+            -90.37925326895751,
+            30.5117285799318
+          ],
+          [
+            -90.42386067628838,
+            30.512133109696748
+          ],
+          [
+            -90.43231260609858,
+            30.508087736301064
+          ],
+          [
+            -90.44311214190122,
+            30.508492034060836
+          ],
+          [
+            -90.46565062139491,
+            30.50282825210111
+          ],
+          [
+            -90.48255448101486,
+            30.501209968098465
+          ],
+          [
+            -90.49006730751292,
+            30.501209968098465
+          ],
+          [
+            -90.49664103069834,
+            30.50525562761797
+          ],
+          [
+            -90.79339666422499,
+            30.50282841569117
+          ],
+          [
+            -90.83465652318617,
+            30.49843037176892
+          ],
+          [
+            -90.85865516324404,
+            30.48905577478571
+          ],
+          [
+            -90.91977169992445,
+            30.482162112540195
+          ],
+          [
+            -90.94696704007822,
+            30.484359203007173
+          ],
+          [
+            -90.95464660489665,
+            30.482428933651335
+          ],
+          [
+            -90.9693657707987,
+            30.466433800817413
+          ],
+          [
+            -90.99016459218248,
+            30.46422736940444
+          ],
+          [
+            -91.00616368555417,
+            30.466985400861006
+          ],
+          [
+            -91.09438560287583,
+            30.452429368454432
+          ],
+          [
+            -91.13329334903277,
+            30.50540883819653
+          ],
+          [
+            -91.14187625742298,
+            30.508760810993167
+          ],
+          [
+            -91.22436067927609,
+            30.50607909170793
+          ],
+          [
+            -91.24926163681664,
+            30.496692491837933
+          ],
+          [
+            -91.27151890751952,
+            30.488129377414126
+          ],
+          [
+            -91.46267623614814,
+            30.554142256662004
+          ]
+        ],
+        "type": "LineString"
+      }
+    }
+  ]
+}
+
+//creating variable with coordinates for  I-10 East to I-59 North
+const geojsoni59 = {
+  'type': 'FeatureCollection',
+  'features': [
+{
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "coordinates": [
+          [
+            -90.15787395090163,
+            29.99851986298175
+          ],
+          [
+            -90.11453630711533,
+            29.994282281849365
+          ],
+          [
+            -90.10964334733289,
+            29.96764191566035
+          ],
+          [
+            -90.09077050245821,
+            29.954924676685096
+          ],
+          [
+            -90.07609162311148,
+            29.95553029638846
+          ],
+          [
+            -90.0551217954734,
+            29.98399026022473
+          ],
+          [
+            -90.0439378873996,
+            30.001546595875013
+          ],
+          [
+            -90.01178415168711,
+            30.012442069873813
+          ],
+          [
+            -90.01318214019604,
+            30.02757268735462
+          ],
+          [
+            -89.98032941022909,
+            30.034229427558472
+          ],
+          [
+            -89.93209880666097,
+            30.06508665290339
+          ],
+          [
+            -89.89435311691157,
+            30.109842779892077
+          ],
+          [
+            -89.85520459587597,
+            30.157904095252846
+          ],
+          [
+            -89.79159611870605,
+            30.213491491706947
+          ],
+          [
+            -89.76573333128553,
+            30.23885791346882
+          ],
+          [
+            -89.74903334367214,
+            30.280631533882868
+          ],
+          [
+            -89.73994641836232,
+            30.304170190209533
+          ],
+          [
+            -89.7364514470894,
+            30.327099856271147
+          ],
+          [
+            -89.74204340112632,
+            30.368721580885392
+          ],
+          [
+            -89.7363978787843,
+            30.389332782066305
+          ],
+          [
+            -89.7217189994376,
+            30.414653733048837
+          ],
+          [
+            -89.69935118328938,
+            30.45985338013577
+          ],
+          [
+            -89.67558537863283,
+            30.483951289300165
+          ],
+          [
+            -89.66320707859043,
+            30.518223474284497
+          ],
+          [
+            -89.6184714462952,
+            30.602489430742295
+          ],
+          [
+            -89.58911368760116,
+            30.639783820185116
+          ],
+          [
+            -89.56185291167111,
+            30.699905769086442
+          ],
+          [
+            -89.54874757149672,
+            30.727332987661313
+          ],
+          [
+            -89.51838601118537,
+            30.75342851273227
+          ],
+          [
+            -89.51433780314392,
+            30.816028920467375
+          ],
+          [
+            -89.49409676293662,
+            30.83688666505219
+          ]
+        ],
+        "type": "LineString"
+      }
+    }
+  ]
+}
+
+//creating variable with coordinates for I-10 West to I-59 North
+const geojsoni10i59 = {
+  'type': 'FeatureCollection',
+  'features': [
+{
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "coordinates": [
+          [
+            -89.63214884656846,
+            30.304470760564755
+          ],
+          [
+            -89.67331243800679,
+            30.297362734693323
+          ],
+          [
+            -89.71447602944441,
+            30.299495196561622
+          ],
+          [
+            -89.73752764064967,
+            30.306603067837543
+          ],
+          [
+            -89.74089402553176,
+            30.359700064661425
+          ],
+          [
+            -89.7416422999341,
+            30.376808639446537
+          ],
+          [
+            -89.73079232109738,
+            30.388427850769403
+          ],
+          [
+            -89.72518026307844,
+            30.40682210961657
+          ],
+          [
+            -89.70126671233757,
+            30.461404712300222
+          ],
+          [
+            -89.6689337387438,
+            30.488059402293473
+          ]
+        ],
+        "type": "LineString"
+      }
+    }
+  ]
+}
+
+
+map.on('load', () => {
+
+  //adding 2016 evacuation routes source
+  map.addSource('evacroutes', {
+    type: 'geojson',
+    data: 'https://raw.githubusercontent.com/isabellamontecalvo/isabellamontecalvo-web/main/Louisiana_Evacuation_Routes.geojson' // replace this with the url of your own geojson
+  })
+
+//adding each variable for each evac route as a geojson
+  map.addSource('linei55', {
+      type: 'geojson',
+      data: geojsoni55
+    });
+
+    map.addSource('linei12', {
+      type: 'geojson',
+      data: geojsoni12
+    });
+
+    map.addSource('linei10', {
+      type: 'geojson',
+      data: geojsoni10
+    });
+
+    map.addSource('lineus190w', {
+      type: 'geojson',
+      data: geojsonus190w
+    });
+
+    map.addSource('linei59', {
+      type: 'geojson',
+      data: geojsoni59
+    });
+
+    map.addSource('linei10i59', {
+      type: 'geojson',
+      data: geojsoni10i59
+    });
+
+  //adding 2016 Evac route layer to map
+    map.addLayer({
+    id: '2016EvacRoutes',
+    type: 'line',
+    source: 'evacroutes',
+    paint: {
+      'line-color': '#000000',
+      'line-opacity': 0.5,
+      'line-width': 2
+    }
+  });
+
+  //adding flooding layer to map (fill layer)
+   map.addLayer({
+      id: 'Flooding',
+      type:'fill',
+      source: {
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/isabellamontecalvo/isabellamontecalvo-web/main/Hurricane_Katrina_Flooding_Extent_Inside_Levee_Protected_Areas%20(1).geojson'
+      },
+      layout: {'visibility': 'visible'},
+      paint: {
+      'fill-color': '#73B8EE',
+      'fill-opacity': 0.4
+    }
+    });
+
+  // adding linei55 line and dashed line to map
+      map.addLayer({
+      type: 'line',
+      source: 'linei55',
+      id: 'line-background',
+      paint: {
+      'line-color': '#A7631D',
+      'line-width': 6,
+      'line-opacity': 0.4
+      }
+      });
+    
+      map.addLayer({
+        type: 'line',
+        source: 'linei55',
+        id: 'line-dashed',
+        paint: {
+        'line-color': '#A7631D',
+        'line-width': 6,
+        'line-dasharray': [0, 4, 3]
+        }
+        });
+
+  //adding linei12 line and dashed line to map
+      map.addLayer({
+          type: 'line',
+          source: 'linei12',
+          id: 'line-background2',
+          paint: {
+          'line-color': '#F3392A',
+          'line-width': 6,
+          'line-opacity': 0.4
+      }
+      });
+    
+      map.addLayer({
+        type: 'line',
+        source: 'linei12',
+        id: 'line-dashed2',
+        paint: {
+        'line-color': '#F3392A',
+        'line-width': 6,
+        'line-dasharray': [0, 4, 3]
+        }
+        });
+
+
+    // adding linei10 line and dashed line to map
+      map.addLayer({
+      type: 'line',
+      source: 'linei10',
+      id: 'line-background3',
+      paint: {
+      'line-color': 'blue',
+      'line-width': 6,
+      'line-opacity': 0.4
+      }
+      });
+    
+      map.addLayer({
+        type: 'line',
+        source: 'linei10',
+        id: 'line-dashed3',
+        paint: {
+        'line-color': 'blue',
+        'line-width': 6,
+        'line-dasharray': [0, 4, 3]
+        }
+        });
+
+     // adding lineus190w line and dashed line to map
+      map.addLayer({
+      type: 'line',
+      source: 'lineus190w',
+      id: 'line-background4',
+      paint: {
+      'line-color': '#F88D1B',
+      'line-width': 6,
+      'line-opacity': 0.4
+      }
+      });
+    
+      map.addLayer({
+        type: 'line',
+        source: 'lineus190w',
+        id: 'line-dashed4',
+        paint: {
+        'line-color': '#F88D1B',
+        'line-width': 6,
+        'line-dasharray': [0, 4, 3]
+        }
+        });
+
+    //  adding linei59 line and dashed line to map  
+      map.addLayer({
+      type: 'line',
+      source: 'linei59',
+      id: 'line-background5',
+      paint: {
+      'line-color': '#21C930',
+      'line-width': 6,
+      'line-opacity': 0.4
+      }
+      });
+    
+      map.addLayer({
+        type: 'line',
+        source: 'linei59',
+        id: 'line-dashed5',
+        paint: {
+        'line-color': '#21C930',
+        'line-width': 6,
+        'line-dasharray': [0, 4, 3]
+        }
+        });
+
+    // adding linei10i59 line and dashed line to map  
+      map.addLayer({
+      type: 'line',
+      source: 'linei10i59',
+      id: 'line-background6',
+      paint: {
+      'line-color': '#B221C9',
+      'line-width': 6,
+      'line-opacity': 0.4
+      }
+      });
+    
+      map.addLayer({
+        type: 'line',
+        source: 'linei10i59',
+        id: 'line-dashed6',
+        paint: {
+        'line-color': '#B221C9',
+        'line-width': 6,
+        'line-dasharray': [0, 4, 3]
+        }
+        });
+
+
+      // technique based on https://jsfiddle.net/2mws8y3q/
+      // an array of valid line-dasharray values, specifying the lengths of the alternating dashes and gaps that form the dash pattern
+      //new dash array sequence variable created for each line
+      const dashArraySequence = [
+        [0, 4, 3],
+        [0.5, 4, 2.5],
+        [1, 4, 2],
+        [1.5, 4, 1.5],
+        [2, 4, 1],
+        [2.5, 4, 0.5],
+        [3, 4, 0],
+        [0, 0.5, 3, 3.5],
+        [0, 1, 3, 3],
+        [0, 1.5, 3, 2.5],
+        [0, 2, 3, 2],
+        [0, 2.5, 3, 1.5],
+        [0, 3, 3, 1],
+        [0, 3.5, 3, 0.5]
+        ];
+      
+        const dashArraySequence2 = [
+        [0, 4, 3],
+        [0.5, 4, 2.5],
+        [1, 4, 2],
+        [1.5, 4, 1.5],
+        [2, 4, 1],
+        [2.5, 4, 0.5],
+        [3, 4, 0],
+        [0, 0.5, 3, 3.5],
+        [0, 1, 3, 3],
+        [0, 1.5, 3, 2.5],
+        [0, 2, 3, 2],
+        [0, 2.5, 3, 1.5],
+        [0, 3, 3, 1],
+        [0, 3.5, 3, 0.5]
+        ];
+
+        const dashArraySequence3 = [
+        [0, 4, 3],
+        [0.5, 4, 2.5],
+        [1, 4, 2],
+        [1.5, 4, 1.5],
+        [2, 4, 1],
+        [2.5, 4, 0.5],
+        [3, 4, 0],
+        [0, 0.5, 3, 3.5],
+        [0, 1, 3, 3],
+        [0, 1.5, 3, 2.5],
+        [0, 2, 3, 2],
+        [0, 2.5, 3, 1.5],
+        [0, 3, 3, 1],
+        [0, 3.5, 3, 0.5]
+        ];
+
+        const dashArraySequence4 = [
+        [0, 4, 3],
+        [0.5, 4, 2.5],
+        [1, 4, 2],
+        [1.5, 4, 1.5],
+        [2, 4, 1],
+        [2.5, 4, 0.5],
+        [3, 4, 0],
+        [0, 0.5, 3, 3.5],
+        [0, 1, 3, 3],
+        [0, 1.5, 3, 2.5],
+        [0, 2, 3, 2],
+        [0, 2.5, 3, 1.5],
+        [0, 3, 3, 1],
+        [0, 3.5, 3, 0.5]
+        ];
+
+        const dashArraySequence5 = [
+        [0, 4, 3],
+        [0.5, 4, 2.5],
+        [1, 4, 2],
+        [1.5, 4, 1.5],
+        [2, 4, 1],
+        [2.5, 4, 0.5],
+        [3, 4, 0],
+        [0, 0.5, 3, 3.5],
+        [0, 1, 3, 3],
+        [0, 1.5, 3, 2.5],
+        [0, 2, 3, 2],
+        [0, 2.5, 3, 1.5],
+        [0, 3, 3, 1],
+        [0, 3.5, 3, 0.5]
+        ];
+
+        const dashArraySequence6 = [
+        [0, 4, 3],
+        [0.5, 4, 2.5],
+        [1, 4, 2],
+        [1.5, 4, 1.5],
+        [2, 4, 1],
+        [2.5, 4, 0.5],
+        [3, 4, 0],
+        [0, 0.5, 3, 3.5],
+        [0, 1, 3, 3],
+        [0, 1.5, 3, 2.5],
+        [0, 2, 3, 2],
+        [0, 2.5, 3, 1.5],
+        [0, 3, 3, 1],
+        [0, 3.5, 3, 0.5]
+        ];
+ 
+
+    //animating the dashed array line FOR EACH DIFFERENT ROUTE (6times)
+    let step = 0;
+    
+    function animateDashArray(timestamp) {
+        // Update line-dasharray using the next value in dashArraySequence. The
+        // divisor in the expression `timestamp / 50` controls the animation speed.
+        const newStep = parseInt(
+        (timestamp / 50) % dashArraySequence.length
+        );
+        
+        //setting the paint properties of the line
+        if (newStep !== step) {
+        map.setPaintProperty(
+        'line-dashed',
+        'line-dasharray',
+        dashArraySequence[step]
+        );
+        step = newStep;
+        }
+        
+        // Request the next frame of the animation.
+        requestAnimationFrame(animateDashArray);
+        }
+        
+        // start the animation
+        animateDashArray(0);
+
+  
+    let stepup = 0;
+
+    function animateDashArraytwo(timestamp2) {
+        // Update line-dasharray using the next value in dashArraySequence. The
+        // divisor in the expression `timestamp / 50` controls the animation speed.
+        const newStep2 = parseInt(
+        (timestamp2 / 50) % dashArraySequence2.length
+        );
+        
+        if (newStep2 !== stepup) {
+        map.setPaintProperty(
+        'line-dashed2',
+        'line-dasharray',
+        dashArraySequence2[stepup]
+        );
+        stepup = newStep2;
+        }
+        
+        // Request the next frame of the animation.
+        requestAnimationFrame(animateDashArraytwo);
+        }
+        
+        // start the animation
+        animateDashArraytwo(0);
+      
+
+
+        let stepup3 = 0;
+
+        function animateDashArraythree(timestamp3) {
+            // Update line-dasharray using the next value in dashArraySequence. The
+            // divisor in the expression `timestamp / 50` controls the animation speed.
+            const newStep3 = parseInt(
+            (timestamp3 / 50) % dashArraySequence3.length
+            );
+            
+            if (newStep3 !== stepup3) {
+            map.setPaintProperty(
+            'line-dashed3',
+            'line-dasharray',
+            dashArraySequence3[stepup3]
+            );
+            stepup3 = newStep3;
+            }
+            
+            // Request the next frame of the animation.
+            requestAnimationFrame(animateDashArraythree);
+            }
+            
+            // start the animation
+            animateDashArraythree(0);
+        
+        
+        let stepup4 = 0;
+
+        function animateDashArrayfour(timestamp4) {
+            // Update line-dasharray using the next value in dashArraySequence. The
+            // divisor in the expression `timestamp / 50` controls the animation speed.
+            const newStep4 = parseInt(
+            (timestamp4 / 50) % dashArraySequence4.length
+            );
+            
+            if (newStep4 !== stepup4) {
+            map.setPaintProperty(
+            'line-dashed4',
+            'line-dasharray',
+            dashArraySequence4[stepup4]
+            );
+            stepup4 = newStep4;
+            }
+            
+            // Request the next frame of the animation.
+            requestAnimationFrame(animateDashArrayfour);
+            }
+            
+            // start the animation
+            animateDashArrayfour(0);
+        
+        
+        let stepup5 = 0;
+
+        function animateDashArrayfive(timestamp5) {
+            // Update line-dasharray using the next value in dashArraySequence. The
+            // divisor in the expression `timestamp / 50` controls the animation speed.
+            const newStep5 = parseInt(
+            (timestamp5 / 50) % dashArraySequence5.length
+            );
+            
+            if (newStep5 !== stepup5) {
+            map.setPaintProperty(
+            'line-dashed5',
+            'line-dasharray',
+            dashArraySequence5[stepup5]
+            );
+            stepup5 = newStep5;
+            }
+            
+            // Request the next frame of the animation.
+            requestAnimationFrame(animateDashArrayfive);
+            }
+            
+            // start the animation
+            animateDashArrayfive(0);
+
+
+            let stepup6 = 0;
+
+          function animateDashArraysix(timestamp6) {
+              // Update line-dasharray using the next value in dashArraySequence. The
+              // divisor in the expression `timestamp / 50` controls the animation speed.
+              const newStep6 = parseInt(
+              (timestamp6 / 50) % dashArraySequence6.length
+              );
+              
+              if (newStep6 !== stepup6) {
+              map.setPaintProperty(
+              'line-dashed6',
+              'line-dasharray',
+              dashArraySequence6[stepup6]
+              );
+              stepup6 = newStep6;
+              }
+              
+              // Request the next frame of the animation.
+              requestAnimationFrame(animateDashArraysix);
+              }
+              
+              // start the animation
+              animateDashArraysix(0);
+          
+      
+      //Code to add the tabs on the top right corner
+      // After the last frame rendered before the map enters an "idle" state.
+      map.on('idle', () => {
+      // If these two layers were not added to the map, abort
+      if (!map.getLayer('2016EvacRoutes') || !map.getLayer('Flooding')) {
+      return;
+      }
+      
+      // Enumerate ids of the layers.
+      const toggleableLayerIds = ['2016EvacRoutes', 'Flooding'];
+      
+      // Set up the corresponding toggle button for each layer.
+      for (const id of toggleableLayerIds) {
+      // Skip layers that already have a button set up.
+      if (document.getElementById(id)) {
+      continue;
+      }
+      
+      // Create a link.
+      const link = document.createElement('a');
+      link.id = id;
+      link.href = '#';
+      link.textContent = id;
+      link.className = 'active';
+      
+      // Show or hide layer when the toggle is clicked.
+      link.onclick = function (e) {
+      const clickedLayer = this.textContent;
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const visibility = map.getLayoutProperty(
+      clickedLayer,
+      'visibility'
+      );
+      
+      // Toggle layer visibility by changing the layout object's visibility property.
+      if (visibility === 'visible') {
+      map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+      this.className = '';
+      } else {
+      this.className = 'active';
+      map.setLayoutProperty(
+      clickedLayer,
+      'visibility',
+      'visible'
+      );
+      }
+      };
+      
+      const layers = document.getElementById('menu');
+      layers.appendChild(link);
+      }
+      });
+
+
+
+
+      
+          
+          });
+
+
+
+</script>
+
+</body>
