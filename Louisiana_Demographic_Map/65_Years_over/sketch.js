@@ -83,7 +83,7 @@
     
     <div id="button-container">
       <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/Total_Population/index.html'">Total Population</button>
-      <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/Black_African_American.html'">Black and African American</button>
+      <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/Black_African_American/index.html'">Black and African American</button>
       <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/65_Years_over/index.html'">65 Years and over</button>
       <button onclick="location.href='https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/Income_below_poverty/index.html'">Income below poverty level</button>
     </div>
