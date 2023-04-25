@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Existing EvacuSpots and Optimized EvacuSpots</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+h1 {
+  font-size: 20px;
+  line-height: 30px;
+}
+
+h2 {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #2dc4b2;
+}
+</style>
+</head>
+<body>
+<style>
+    #menu {
+        background: #fff;
+        position: absolute;
+        z-index: 1;
+        top: 10px;
+        right: 10px;
+        border-radius: 3px;
+        width: 120px;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    #menu a {
+        font-size: 13px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        text-align: center;
+    }
+
+    #menu a:last-child {
+        border: none;
+    }
+
+    #menu a:hover {
+        background-color: #f8f8f8;
+        color: #404040;
+    }
+
+    #menu a.active {
+        background-color: #3887be;
+        color: #ffffff;
+    }
+
+    #menu a.active:hover {
+        background: #3074a4;
+    }
+</style>
+<style>
+#console {
+  position: absolute;
+  width: 240px;
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: white;
+}
+
+.session {
+  margin-bottom: 20px;
+}
+
+.row {
+  height: 12px;
+  width: 100%;
+}
+
+.colors {
+  background: linear-gradient(to right, #2dc4b2, #3bb3c3, #669ec4, #8b88b6, #a2719b, #aa5e79);
+  margin-bottom: 5px;
+}
+
+.label {
+  width: 15%;
+  display: inline-block;
+  text-align: center;
+}
+
+</style>
+
+<nav id="menu"></nav>
+<div id="map"></div>
+<div id='console'>
+    <h1>Existing EvacuSpots and Optimized EvacuSpots</h1>
+    <p>Existing EvacuSpots Data: <br><a href='https://ready.nola.gov/plan/hurricane/'> NOLA Ready Evacuspot Locator</a><br><a href='https://github.com/Evacuteer/evacuspots/blob/master/evacuspots.geojson'>Evacuspot GeoJSON</a>
+    <p>Optimized EvacuSpots Data: <br><a href='https://link.springer.com/article/10.1007/s11069-016-2598-0'> Bian & Wilmot, 2016</a>
+        <br><br><img src="red_bus.svg" width="20" height="20"> Existing EvacuSpots
+        <br><br><img src="green_bus.svg" width="20" height="20"> Optimized EvacuSpots</p>
+
+</div>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoibWF5YWJlYWsiLCJhIjoiY2xld2QwaW15MDhtbjN0cXFjOGw2MGdwMiJ9.4gvCm_szNKWaWqdjdN7I8w';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+        style: 'mapbox://styles/mayabeak/clgb8bxp2000801rmmhk7xufr',  // mapbox light style with custom recoloured icons loaded
+        zoom: 11.4,
+        center: [-90.05, 29.98]  // center on New Orleans
+    });
+
+    // Wait until the map has finished loading.
+    map.on('load', () => {
+        // Add a custom vector tileset source. This tileset contains
+        // point features representing existing evacuspots.
+
+        map.addSource('existing', {
+            type: 'vector',
+            url: 'mapbox://mayabeak.clg9zg1nk0ah72os13m62cxx4-07fy9'  // tileset for existing evacuspots layer
+        });
+
+        map.addLayer({    // add existing evacuspots layer
+            'id': 'existing',
+            'type': 'symbol',
+            'source': 'existing',
+            'layout': {
+                // Make the layer visible by default.
+                'visibility': 'visible',
+                'icon-image': 'red_bus',           // load icons as red buses
+                'icon-allow-overlap': true,        // allow overlap
+                'icon-size': 1,
+            },
+            'source-layer': 'evacuspots'
+        });
+
+        map.addSource('optimized', {               // tileset for optimized evacuspots layer
+            type: 'vector',
+            url: 'mapbox://mayabeak.46vx8rel'
+        });
+        map.addLayer({              // add optimized evacuspots layer
+            'id': 'optimized',
+            'type': 'symbol',
+            'source': 'optimized',
+            'layout': {
+                // Make the layer visible by default.
+                'visibility': 'visible',
+                'icon-image': 'green_bus',        // load icons as green buses
+                'icon-allow-overlap': true,       // allow overlap
+                'icon-size': 1,
+            },
+            'source-layer': 'optimized-evacuspots-7lc20w'
+        });
+
+    });
+   
+
+    // After the last frame rendered before the map enters an "idle" state.
+    map.on('idle', () => {
+        // If these two layers were not added to the map, abort
+        if (!map.getLayer('existing') || !map.getLayer('optimized')) {
+            return;
+        }
+
+        // Enumerate ids of the layers.
+        const toggleableLayerIds = ['existing', 'optimized'];
+
+        // Set up the corresponding toggle button for each layer.
+        for (const id of toggleableLayerIds) {
+            // Skip layers that already have a button set up.
+            if (document.getElementById(id)) {
+                continue;
+            }
+
+            // Create a link.
+            const link = document.createElement('a');
+            link.id = id;
+            link.href = '#';
+            link.textContent = id;
+            link.className = 'active';
+
+            // Show or hide layer when the toggle is clicked.
+            link.onclick = function (e) {
+                const clickedLayer = this.textContent;
+                e.preventDefault();
+                e.stopPropagation();
+
+                const visibility = map.getLayoutProperty(
+                    clickedLayer,
+                    'visibility'
+                );
+
+                // Toggle layer visibility by changing the layout object's visibility property.
+                if (visibility === 'visible') {
+                    map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                    this.className = '';
+                } else {
+                    this.className = 'active';
+                    map.setLayoutProperty(
+                        clickedLayer,
+                        'visibility',
+                        'visible'
+                    );
+                }
+            };
+
+            const layers = document.getElementById('menu');
+            layers.appendChild(link);
+        }
+    });
+</script>
+
+</body>
+</html>
