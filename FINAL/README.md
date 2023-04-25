@@ -22,17 +22,17 @@ Example screenshot: <p> <img src="https://ubc-geos472-spring2023.github.io/Hurri
 <p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/evac_routes.png" width="500" title="Evacuation Routes screenshot"> </p>
 
 * Individual Stories Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/stories-index.html
-<p> <img src = "" width="" title=""></p>
+<p> <img src = "https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/stories-screenshot.png" width="500" title="Stories screenshot"></p>
 
 * Shelter spots Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/shelterspots.html
 
 <p> <img src="https://ubc-geos472-spring2023.github.io/HurricaneKatrina/shelterspots.png" width="500" title="Shelter spots screenshot"> </p>
 
 * EvacuSpots Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/evacuspots.html
-<p> <img src = "" width="" title=""></p>
+<p> <img src = "https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/evacuspots-screenshot.png" width="500" title="Evacuspots screenshot"></p>
 
 * Optimized EvacuSpots Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/optimized-evacuspots.html
-<p> <img src = "" width="" title=""></p>
+<p><img src = "https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/optimized-evacuspots-screenshot.png" width="500" title="Optimized Evacuspots screenshot"></p>
 
 To include:
 * A URL link to the group essay.
