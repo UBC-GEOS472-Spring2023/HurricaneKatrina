@@ -33,8 +33,3 @@ Example screenshot: <p> <img src="https://ubc-geos472-spring2023.github.io/Hurri
 
 * Optimized EvacuSpots Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/optimized-evacuspots.html
 <p><img src = "https://ubc-geos472-spring2023.github.io/HurricaneKatrina/FINAL/optimized-evacuspots-screenshot.png" width="500" title="Optimized Evacuspots screenshot"></p>
-
-To include:
-* A URL link to the group essay.
-* URL links to individual HTML files that I should be able to click on and use your interactive visualizations.
-* Example screenshots alongside each of those individual map HTML links.
