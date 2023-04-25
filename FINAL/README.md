@@ -5,7 +5,8 @@ This is the README file our final project for GEOS 472: **Hurricane Katrina: An 
 **Here is the link to our UBC Blogs page :** https://blogs.ubc.ca/hurricanekatrina/
 
 URL links to individual HTML files:
-* Pressure map: 
+* Pressure map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/pressure.html
+* Wind Speed map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/wind.html
 * Louisiana Demographic Map: https://ubc-geos472-spring2023.github.io/HurricaneKatrina/Louisiana_Demographic_Map/DemographicMap_Final/index.html
 
 
